@@ -1,0 +1,34 @@
+;; Bind `M-n' and `M-p' for cycling through candidates.
+;; This overrides the default minibuffer history navigation.
+(define-key vertico-map (kbd "M-n") #'vertico-next)
+(define-key vertico-map (kbd "M-p") #'vertico-previous)
+
+;; Bind `C-n' and `C-p' for cycling through the input history.
+;; This restores the default minibuffer history navigation.
+(define-key vertico-map (kbd "C-n") #'next-history-element)
+(define-key vertico-map (kbd "C-p") #'previous-history-element)
+
+;; Remap built-in commands with their `consult' equivalent.
+;; These remappings generally provide a superior editing experience.
+(define-key global-map [remap switch-to-buffer-other-window] #'consult-buffer-other-window)
+(define-key global-map [remap switch-to-buffer-other-frame] #'consult-buffer-other-frame)
+(define-key global-map [remap switch-to-buffer-other-tab] #'consult-buffer-other-tab)
+(define-key global-map [remap project-switch-to-buffer] #'consult-project-buffer)
+(define-key global-map [remap recentf-open-files] #'consult-recent-file)
+(define-key global-map [remap switch-to-buffer] #'consult-buffer)
+(define-key global-map [remap bookmark-jump] #'consult-bookmark)
+(define-key global-map [remap goto-line] #'consult-goto-line)
+
+;; Buffer-local search and navigation commands.
+;; These operate within the current buffer context.
+(define-key global-map (kbd "M-s l") #'consult-line)
+(define-key global-map (kbd "M-s e") #'consult-flymake)
+
+;; Project-wide and directory search commands.
+;; These operate across multiple files and directories.
+(define-key global-map (kbd "M-s f") #'consult-find)
+(define-key global-map (kbd "M-s r") #'consult-ripgrep)
+
+(provide '@keymap)
+
+;;; @keymap.el ends here

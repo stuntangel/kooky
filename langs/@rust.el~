@@ -1,0 +1,9 @@
+(use-package rust-mode
+  :unless noninteractive
+  :config
+  (def-auto-mode! rust-mode "\\.rs\\'")
+  (def-lsp! rust-mode "rust-analyzer"))
+
+(provide '@rust)
+
+;;; @rust.el ends here
