@@ -1,10 +1,10 @@
 (use-package evil
   :preface
-  (defvar forge--evil-disabled-modes
+  (defvar kooky--evil-disabled-modes
     '(vterm-mode eshell-mode)
     "List of modes where `evil-mode' is disabled.")
 
-  (defun forge--evil-adjust-scroll-margin ()
+  (defun kooky--evil-adjust-scroll-margin ()
     "Adjust the `scroll-margin' near end-of-buffer.
 This prevents extra lines at EOB when the point is within that distance."
     (unless (or (minibufferp) (window-minibuffer-p))
@@ -13,13 +13,13 @@ This prevents extra lines at EOB when the point is within that distance."
         (unless (eq scroll-margin new)
           (setq-local scroll-margin new)))))
 
-  (defun forge--evil-adjust-shift-width ()
+  (defun kooky--evil-adjust-shift-width ()
     "Adjust `evil-shift-width' to mirror `tab-width'.
 This keeps the indentation operators (>> and <<) aligned across major modes."
     (unless (derived-mode-p 'org-mode)
       (setq-local evil-shift-width tab-width)))
 
-  (defun forge--evil-display-save-message ()
+  (defun kooky--evil-display-save-message ()
     "Display save confirmation with file statistics.
 This shows the file name, line count, and character count after saving."
     (message "%s %dL %dC written"
@@ -36,16 +36,16 @@ This shows the file name, line count, and character count after saving."
   (setq evil-visual-state-cursor 'box)
   :config
   ;; Adjust `scroll-margin' near end-of-buffer.
-  (add-hook 'post-command-hook #'forge--evil-adjust-scroll-margin)
+  (add-hook 'post-command-hook #'kooky--evil-adjust-scroll-margin)
 
   ;; Keep `evil-shift-width' consistent with `tab-width'.
-  (add-hook 'after-change-major-mode-hook #'forge--evil-adjust-shift-width)
+  (add-hook 'after-change-major-mode-hook #'kooky--evil-adjust-shift-width)
 
-  ;; Display `forge--evil-display-save-message' after saving.
-  (add-hook 'after-save-hook #'forge--evil-display-save-message)
+  ;; Display `kooky--evil-display-save-message' after saving.
+  (add-hook 'after-save-hook #'kooky--evil-display-save-message)
 
   ;; Set the specific modes where `evil-mode' is disabled.
-  (dolist (mode forge--evil-disabled-modes)
+  (dolist (mode kooky--evil-disabled-modes)
     (evil-set-initial-state mode 'emacs))
 
   ;; Enable `evil-mode' after initialization.

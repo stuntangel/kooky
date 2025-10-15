@@ -17,7 +17,7 @@
     "Directory where Tree-sitter files are stored.")
   :config
   ;; This temporarily overrides `user-emacs-directory' to point to
-  ;; `forge-cache-directory' so the `treesit' internals write the
+  ;; `kooky-cache-directory' so the `treesit' internals write the
   ;; compiled `*.so' files to our cache instead.
   (let ((overwrite-directory-fn (lambda (orig-fn &rest args)
               (let ((user-emacs-directory kooky-cache-directory))

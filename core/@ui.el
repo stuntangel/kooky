@@ -18,7 +18,7 @@
 
   (defun kooky--mode-line-segment (segment)
     "Returns SEGMENT if it is enabled for the current major mode, or if not restricted."
-    (let ((modes (alist-get segment forge--mode-line-enabled-segments nil nil #'eq)))
+    (let ((modes (alist-get segment kooky--mode-line-enabled-segments nil nil #'eq)))
       (when (or (null modes) (apply #'derived-mode-p modes))
         (funcall segment))))
 
@@ -57,8 +57,8 @@
                       (:eval (kooky--mode-line-segment 'kooky--mode-line-buffer-name))
                       (:eval (kooky--mode-line-segment 'kooky--mode-line-separator))
                       (:eval (kooky--mode-line-segment 'kooky--mode-line-buffer-modified))))
-              (quote ((:eval (forge--mode-line-segment 'kooky--mode-line-major-mode))
-                      (:eval (forge--mode-line-segment 'kooky--mode-line-separator))))))))
+              (quote ((:eval (kooky--mode-line-segment 'kooky--mode-line-major-mode))
+                      (:eval (kooky--mode-line-segment 'kooky--mode-line-separator))))))))
   :config
   ;; Number of lines above and below the point.
   (setq scroll-margin 10)
@@ -130,7 +130,7 @@
 (use-package display-line-numbers
   :unless noninteractive
   :preface
-  (defvar forge--display-line-number-hooks
+  (defvar kooky--display-line-number-hooks
     '(prog-mode-hook text-mode-hook conf-mode-hook)
     "List of major mode hooks where `display-line-numbers-mode' is enabled.")
   :config
@@ -151,7 +151,7 @@
 (use-package hl-line
   :unless noninteractive
   :preface
-  (defvar forge--display-hl-line-hooks
+  (defvar kooky--display-hl-line-hooks
     '(prog-mode-hook text-mode-hook conf-mode-hook)
     "List of major mode hooks where `hl-line-mode' is enabled.")
   :config
@@ -160,8 +160,8 @@
   (setq hl-line-sticky-flag nil)
 
   ;; Enable `hl-line-mode' in common editing modes.
-  ;; This adds a hook for all items in `forge--display-hl-line-hooks'.
-  (dolist (hook forge--display-hl-line-hooks)
+  ;; This adds a hook for all items in `kooky--display-hl-line-hooks'.
+  (dolist (hook kooky--display-hl-line-hooks)
     (add-hook hook #'hl-line-mode)))
 
 (use-package paren

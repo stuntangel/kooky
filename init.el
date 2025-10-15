@@ -10,7 +10,7 @@
 ;;
 ;;; Code:
 
-(defconst forge-modules
+(defconst kooky-modules
   '(;;
     ;; Core/Foundation modules.
     ;; These define the base editing environment and interface.
@@ -23,7 +23,7 @@
   "List of modules to load during initialization.
 Each symbol corresponds to a file (`*.el') with the same name.")
 
-(when (not forge--nix)
+(when (not kooky--nix)
   ;; Initialize and refresh `package.el' on non-Nix systems.
   ;; Since we disabled the automatic package initialization,
   ;; we need to explicitly bootstrap the package process.
@@ -43,9 +43,9 @@ Each symbol corresponds to a file (`*.el') with the same name.")
 
   (require 'use-package))
 
-;; Load the modules declared in `forge-modules'.
+;; Load the modules declared in `kooky-modules'.
 ;; Flattens any nested groups - then `require' each feature.
 ;; Each module file *must* contain a matching `provide' statement.
-(mapc #'require (apply #'append forge-modules))
+(mapc #'require (apply #'append kooky-modules))
 
 ;; init.el ends here

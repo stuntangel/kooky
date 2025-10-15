@@ -88,7 +88,7 @@
         ## The GNU Emacs derivation.
         ##
         #@ Derivation
-        forge = pkgs.symlinkJoin {
+        kooky = pkgs.symlinkJoin {
           inherit name;
 
           paths = with epkgs.stable; [
@@ -115,12 +115,12 @@
         # See: https://nix.dev/manual/nix/2.18/command-ref/new-cli/nix3-run
         apps.default = {
           type = "app";
-          program = "${forge}/bin/emacs";
+          program = "${kooky}/bin/emacs";
         };
 
         # Package output for "nix build".
         # See: https://nix.dev/manual/nix/2.18/command-ref/new-cli/nix3-build
-        packages.default = forge;
+        packages.default = kooky;
 
         # Shell used by "nix develop".
         # See: https://nix.dev/manual/nix/2.18/command-ref/new-cli/nix3-develop

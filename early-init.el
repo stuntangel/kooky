@@ -21,42 +21,42 @@
 ;; Alias `file-name-concat' -> `concat-path'.
 (defalias 'concat-path #'file-name-concat)
 
-(defvar forge-state-directory
-  (concat-path (or (getenv "XDG_STATE_HOME") "~/.local/state") "forge")
+(defvar kooky-state-directory
+  (concat-path (or (getenv "XDG_STATE_HOME") "~/.local/state") "kooky")
   "The directory for storing persistent state data.
 Follows the XDG Base Directory specification for state files.
 See: https://specifications.freedesktop.org/basedir-spec/latest")
 
-(defvar forge-data-directory
-  (concat-path (or (getenv "XDG_DATA_HOME") "~/.local/share") "forge")
+(defvar kooky-data-directory
+  (concat-path (or (getenv "XDG_DATA_HOME") "~/.local/share") "kooky")
   "The directory for storing application data files.
 Follows the XDG Base Directory specification for data files.
 See: https://specifications.freedesktop.org/basedir-spec/latest")
 
-(defvar forge-cache-directory
-  (concat-path (or (getenv "XDG_CACHE_HOME") "~/.cache") "forge")
+(defvar kooky-cache-directory
+  (concat-path (or (getenv "XDG_CACHE_HOME") "~/.cache") "kooky")
   "The directory for storing temporary cache files.
 Follows the XDG Base Directory specification for cache files.
 See: https://specifications.freedesktop.org/basedir-spec/latest")
 
-(defvar forge--nix (equal (getenv "NIX") "1")
+(defvar kooky--nix (equal (getenv "NIX") "1")
   "Non-nil when `NIX' is set in the environment.")
 
-(defvar forge--debug (equal (getenv "DEBUG") "1")
+(defvar kooky--debug (equal (getenv "DEBUG") "1")
   "Non-nil when `DEBUG' is set in the environment.")
 
-(defvar forge--gc-cons-threshold (* 16 1024 1024)
+(defvar kooky--gc-cons-threshold (* 16 1024 1024)
   "Value to which `gc-cons-threshold' is set to post-startup.
 This defines a moderate threshold (16 MB) for garbage collection.")
 
-(defvar forge--gc-cons-percentage gc-cons-percentage
+(defvar kooky--gc-cons-percentage gc-cons-percentage
   "Value to which `gc-cons-percentage' is set to post-startup.
 For now this maintains the default but can be adjusted if needed.")
 
-(defun forge--gc-restore-values ()
+(defun kooky--gc-restore-values ()
   "Restore garbage collection thresholds after startup."
-  (setq gc-cons-threshold forge--gc-cons-threshold)
-  (setq gc-cons-percentage forge--gc-cons-percentage))
+  (setq gc-cons-threshold kooky--gc-cons-threshold)
+  (setq gc-cons-percentage kooky--gc-cons-percentage))
 
 ;; Temporarily increase thresholds to a maximum during startup.
 ;; This defers GC and speeds up initialization by avoiding frequent
@@ -65,9 +65,9 @@ For now this maintains the default but can be adjusted if needed.")
 (setq gc-cons-percentage 1.0)
 
 ;; Schedule the restoration of the original GC values after startup.
-;; This ensures the original values `forge--gc-cons-threshold' and
-;; `forge--gc-cons-percentage' are restored after startup.
-(add-hook 'emacs-startup-hook #'forge--gc-restore-values)
+;; This ensures the original values `kooky--gc-cons-threshold' and
+;; `kooky--gc-cons-percentage' are restored after startup.
+(add-hook 'emacs-startup-hook #'kooky--gc-restore-values)
 
 ;; Increase the maximum amount of data read from processes in a single chunk.
 ;; This increases the performance for subprocess-heavy operations like LSPs
@@ -91,7 +91,7 @@ For now this maintains the default but can be adjusted if needed.")
 ;; Prepend the `langs' folder to the `load-path'.
 (add-to-list 'load-path (concat-path user-emacs-directory "langs"))
 
-(when forge--debug
+(when kooky--debug
   ;; Enable verbose debug prints.
   (setq init-file-debug t)
 
@@ -99,8 +99,8 @@ For now this maintains the default but can be adjusted if needed.")
   (setq debug-on-error t))
 
 (when (boundp 'native-comp-eln-load-path)
-  ;; Redirect `*.eln' artifacts to "`forge-cache-directory'/eln-cache".
-  (let* ((eln-cache (concat-path forge-cache-directory "eln-cache")))
+  ;; Redirect `*.eln' artifacts to "`kooky-cache-directory'/eln-cache".
+  (let* ((eln-cache (concat-path kooky-cache-directory "eln-cache")))
     (setq native-compile-target-directory eln-cache)
     (startup-redirect-eln-cache eln-cache))
 
@@ -108,8 +108,8 @@ For now this maintains the default but can be adjusted if needed.")
   (setq native-comp-async-query-on-exit t)
 
   ;; Display native-compilation warnings only when `DEBUG=1'.
-  (setq native-comp-async-report-warnings-errors forge--debug)
-  (setq native-comp-warning-on-missing-source forge--debug))
+  (setq native-comp-async-report-warnings-errors kooky--debug)
+  (setq native-comp-warning-on-missing-source kooky--debug))
 
 ;; Reduce the `pgtk-wait-for-event-timeout' for PGTK builds.
 ;; This improves responsiveness of child frames and packages.
@@ -190,10 +190,10 @@ For now this maintains the default but can be adjusted if needed.")
 (setq package-enable-at-startup nil)
 
 ;; Enable verbose `use-package' logs when `DEBUG=1'.
-(setq use-package-verbose forge--debug)
+(setq use-package-verbose kooky--debug)
 
 ;; Automatically install packages missing from the system.
 ;; Disabled in Nix environments where packages are managed externally.
-(setq use-package-always-ensure (not forge--nix))
+(setq use-package-always-ensure (not kooky--nix))
 
 ;;; early-init.el ends here
