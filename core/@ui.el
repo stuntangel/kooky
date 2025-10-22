@@ -85,7 +85,7 @@
   (setq save-silently t)
 
   ;; Load the custom `kooky--mode-line'.
-  (setq-default mode-line-format (kooky--mode-line))
+  (setq-default mode-line-format (kooky--mode-line)))
 
 (use-package window
   :unless noninteractive
