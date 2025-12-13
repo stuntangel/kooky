@@ -105,7 +105,6 @@ Returns (font-name . height) or nil if none found."
       (j10s-fonts--set-face-font 'j10s-fonts-serif font))))
 
 ;;; Performance Optimizations
-
 (defun j10s-fonts-setup-performance ()
   "Apply font-related performance optimizations."
   ;; Prevent font cache compaction during GC

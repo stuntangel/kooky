@@ -135,6 +135,9 @@ in
 
       ;; Load configuration modules
       (require 'fonts)       ; Font configuration and management
+      (require 'ui) 	     ; ui management
+      (require 'nano)        ; nano
+      (nano-light)
 
       ;; Additional GC optimizations from Doom Emacs patterns
       ;; Trigger GC when idle for 5 seconds

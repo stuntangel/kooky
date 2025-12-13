@@ -26,6 +26,10 @@
 
 ;; Load configuration modules
 (require 'fonts)       ; Font configuration and management
+(require 'ui) ; ui
+
+(require 'nano) ; nano
+(nano-light) ; initialize to light theme
 
 ;; Additional GC optimizations from Doom Emacs patterns
 ;; Trigger GC when idle for 5 seconds

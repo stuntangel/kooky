@@ -4,10 +4,23 @@
 let
   # Manual overrides for complex cases or files that need explicit control
   # Only add entries here if the pure Nix extraction fails for a specific file
-  packageOverrides = {
+  packageOverrides = pkgs.emacs.pkgs.overrideScope (eself: esuper: {
     # No overrides needed - pure Nix extraction works correctly
-  };
-
+    page-view = esuper.trivialBuild rec {
+      pname = "page_view";
+      version = "2025-12-12";
+      src = pkgs.fetchFromGitHub {
+        owner = "bradmont";
+        repo = "page-view";
+        rev = "eee218c6f314b40aa15ce88d1b31a2686496976e";
+        hash = "sha256-B/zdXuD9nEtYFvOKRu2ejjBiKvnjWW49QfdmvXAYUik=";
+      };
+      propagatedUserEnvPkgs = [
+        esuper.olivetti
+      ];
+      buildInputs = propagatedUserEnvPkgs;
+    };
+  });
   # Extract use-package declarations from an elisp file using pure Nix regex
   # No derivations = no cross-system build issues
   extractUsePackages = elispFile:
@@ -80,9 +93,8 @@ let
     "project" = null; # Built-in to Emacs 30+
     "diff-mode" = null; # Built-in to Emacs
     "xt-mouse" = null; # Built-in to Emacs
-
     # Local libraries (exclude from installation)
-    "app-launcher" = null; # Local file in elisp/app-launcher.el
+    #"app-launcher" = null; # Local file in elisp/app-launcher.el
   };
 
   # Map elisp package name to nixpkgs name

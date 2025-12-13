@@ -1,7 +1,6 @@
 { pkgs, ... }:
 let
   ignore = pkgs.lib.fileset.unions [
-    ./.claude
     ./.envrc
     ./.github
     ./.gitignore
