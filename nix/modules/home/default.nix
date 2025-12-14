@@ -21,7 +21,7 @@ in
 
     package = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.kooky;
+      default = pkgs.callPackage ../../../default.nix;
       defaultText = lib.literalExpression "pkgs.kooky";
       description = "The Kooky configuration package to use";
     };
