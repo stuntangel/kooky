@@ -4,7 +4,7 @@ let
   cfg = config.programs.kooky;
 
   # Use kookyEmacs from overlay (which handles emacs.nix and dependencies)
-  kookyEmacs = pkgs.callPackage ../../emacs.nix { devMode = false; };
+  kookyEmacs = pkgs.callPackage ../../../emacs.nix { devMode = false; };
 
   # Get runtime dependencies directly from passthru (exposed by emacs.nix)
   # Provide defaults in case they're not available
